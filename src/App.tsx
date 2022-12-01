@@ -4,6 +4,7 @@ import type { MovieType, EpisodesType, EpisodeType } from "./types";
 import "./app.css";
 import { useApiGet, TApiResponse } from "./hooks/useApiHook";
 import { EpisodesCarousel } from "./components/EpisodesCarousel";
+import star from "./components/Icons/star.svg";
 
 dotenv.config();
 
@@ -65,9 +66,9 @@ export const App = () => {
 
   return (
     <div className="container mx-auto">
-      <div className="h-[812px] w-full flex">
+      <div className="h-[1372px] lg:h-[812px] w-full flex flex-col lg:flex-row">
         <div
-          className="flex-1 basis-8/12 bg-cover h-full w-full bg-blend-color-normal flex relative"
+          className="flex-1 basis-6/12 lg:basis-8/12 bg-cover flex-col lg:flex-row h-full w-full bg-blend-color-normal flex relative"
           style={{ backgroundImage: `url(${serieData.Poster})` }}
         >
           <div className="absolute inset h-full w-full bg-gradient-to-t from-black">
@@ -90,7 +91,7 @@ export const App = () => {
         </div>
         <div className="flex-1 basis-4/12 flex flex-col">
           <div
-            className="h-3/5 bg-cover"
+            className="h-3/5 bg-cover hidden lg:block"
             style={{ backgroundImage: `url(${currentEpisode.Poster})` }}
           ></div>
           <div className="h-2/5">
@@ -98,8 +99,13 @@ export const App = () => {
               <div className="leading-5">
                 Episode {currentEpisode.Episode} - {currentEpisode.Released}
               </div>
-              <div>
-                {Ratings && Ratings.map(({ Value }) => capitalized(Value))}
+              <div className="flex justify-between items-center space-x-3">
+                <div>
+                  <img src={star} />
+                </div>
+                <div>
+                  {Ratings && Ratings.map(({ Value }) => capitalized(Value))}
+                </div>
               </div>
             </div>
             <hr className="border-b-1 border-[#979797] opacity-20" />
