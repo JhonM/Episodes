@@ -23,15 +23,41 @@ export type MovieType = {
   Poster: string;
   Production: string;
   Rated: string;
+  Ratings: [];
 };
 
-export type EpisodeType = {
+type EpisodeShortType = {
   Episode: string;
   Released: string;
   Title: string;
   imdbID: string;
   imdbRating: string;
 };
+
+type EpisodeLongType = {
+  Actors: string;
+  Awards: string;
+  Country: string;
+  Director: string;
+  Genre: string;
+  Language: string;
+  Metascore: string;
+  Plot: string;
+  Poster: string;
+  Rated: string;
+  Ratings: [];
+  Response: string;
+  Runtime: string;
+  Season: string;
+  Type: string;
+  Writer: string;
+  Year: string;
+  idbRating: string;
+  imdbVotes: string;
+  seriesID: string;
+};
+
+export type EpisodeType = EpisodeLongType & EpisodeShortType;
 
 export type EpisodesType = {
   Episodes: EpisodeType[];

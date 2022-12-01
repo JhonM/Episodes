@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import Content from "./Content";
+import { Content } from "./Content";
+import { Container } from "./Container";
 import { ArrowLeft } from "./ArrowLeft";
 import { ArrowRight } from "./ArrowRight";
 import { CarouselContext } from "./CarouselContext";
 
-const Carousel = (props) => {
+const Carousel = (props: { children: React.ReactNode; lastIdx: number }) => {
   const [idx, setIdx] = useState(0);
   const lastIdx = props.lastIdx;
 
@@ -15,6 +16,7 @@ const Carousel = (props) => {
       setIdx((prevState) => prevState - 1);
     }
   };
+
   const goRight = () => {
     if (idx === lastIdx) {
       setIdx(0);
@@ -22,13 +24,16 @@ const Carousel = (props) => {
       setIdx((prevState) => prevState + 1);
     }
   };
+
   return (
     <CarouselContext.Provider value={{ idx, goLeft, goRight }}>
       <div>{props.children}</div>
     </CarouselContext.Provider>
   );
 };
+
 Carousel.ArrowLeft = ArrowLeft;
 Carousel.ArrowRight = ArrowRight;
 Carousel.Content = Content;
+Carousel.Container = Container;
 export default Carousel;

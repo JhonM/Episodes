@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as dotenv from "dotenv";
-import type { MovieType, EpisodesType } from "./types";
+import type { MovieType, EpisodesType, EpisodeType } from "./types";
 import "./app.css";
 import { useApiGet, TApiResponse } from "./hooks/useApiHook";
 import { EpisodesCarousel } from "./components/EpisodesCarousel";
@@ -13,6 +13,9 @@ export const App = () => {
   const [serieData, setSerieData] = useState<MovieType>({} as MovieType);
   const [episodesData, setEpisodesData] = useState<EpisodesType>(
     {} as EpisodesType
+  );
+  const [currentEpisode, setCurrentEpisode] = useState<EpisodeType>(
+    {} as EpisodeType
   );
 
   const getSerieData: TApiResponse = useApiGet(
@@ -35,30 +38,81 @@ export const App = () => {
     }
   }, [getEpisodesData]);
 
+  useEffect(() => {
+    if (Object.keys(currentEpisode).length === 0 && episodesData) {
+      if (Object.keys(episodesData).length) {
+        const [initialEpisode] = episodesData.Episodes;
+        if (initialEpisode) {
+          setCurrentEpisode(initialEpisode);
+        }
+      }
+    }
+  }, [currentEpisode, episodesData]);
+
   if (!serieData || !episodesData) {
     return <div></div>;
   }
 
-  const { Title, Plot } = serieData;
+  const { Title, Plot, Ratings } = serieData;
+  const capitalized = (w: string) => {
+    const split = w.split("/");
+    return (
+      <span key={w}>
+        <span className="font-bold">{split[0]}</span>/{split[1]}
+      </span>
+    );
+  };
 
   return (
     <div className="container mx-auto">
       <div className="h-[812px] w-full flex">
-        <div className="flex-1 basis-8/12 bg-cover h-full w-full bg-blend-color-normal flex relative">
+        <div
+          className="flex-1 basis-8/12 bg-cover h-full w-full bg-blend-color-normal flex relative"
+          style={{ backgroundImage: `url(${serieData.Poster})` }}
+        >
           <div className="absolute inset h-full w-full bg-gradient-to-t from-black">
-            <div className="relative top-1/4 space-y-32">
-              <div className="pl-20 text-white z-10 max-w-md h-auto space-y-2">
-                <div>Season</div>
-                <div>{Title}</div>
-                <div>{Plot}</div>
+            <div className="relative h-full">
+              <div className="pl-20 pt-[8%] text-white z-10 max-w-md h-auto space-y-68 h-3/5">
+                <div className="">
+                  <div className="leading-7 text-[23px]">Season</div>
+                  <div className="leading-[87px] text-[74px]">{Title}</div>
+                  <div className="leading-7 text-[23px]">{Plot}</div>
+                </div>
               </div>
-              <div className="overflow-hidden display-grid lg:max-w-584 mb-4">
-                <EpisodesCarousel data={episodesData.Episodes} />
+              <div className="overflow-hidden display-grid lg:max-w-584 mb-4 h-2/5">
+                <EpisodesCarousel
+                  data={episodesData.Episodes}
+                  currentEpisode={(episode) => setCurrentEpisode(episode)}
+                />
               </div>
             </div>
           </div>
         </div>
-        <div className="flex-1 basis-4/12">Skinny Is Magic</div>
+        <div className="flex-1 basis-4/12 flex flex-col">
+          <div
+            className="h-3/5 bg-cover"
+            style={{ backgroundImage: `url(${currentEpisode.Poster})` }}
+          ></div>
+          <div className="h-2/5">
+            <div className="h-2/5 flex px-8 items-center justify-between">
+              <div className="leading-5">
+                Episode {currentEpisode.Episode} - {currentEpisode.Released}
+              </div>
+              <div>
+                {Ratings && Ratings.map(({ Value }) => capitalized(Value))}
+              </div>
+            </div>
+            <hr className="border-b-1 border-[#979797] opacity-20" />
+            <div className="h-3/5 p-8 flex flex-col text-left">
+              <div className="text-[27px] leading-8 mb-2">
+                {currentEpisode.Title}
+              </div>
+              <div className="text-[19px] leading-[22px]">
+                {currentEpisode.Plot}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
