@@ -1,0 +1,18 @@
+# compiled output
+/tmp/
+
+# dependencies
+/node_modules/
+/coverage/
+/dist/
+
+# misc
+/.env*
+/.pnp*
+/.sass-cache
+/.cache
+/.parcel-cache
+/libpeerconnection.log
+/npm-debug.log*
+/.DS_Store
+/yarn-error.log
