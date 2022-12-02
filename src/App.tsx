@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
-import * as dotenv from "dotenv";
 import type { MovieType, EpisodesType, EpisodeType } from "./types";
 import "./app.css";
 import { useApiGet, TApiResponse } from "./hooks/useApiHook";
 import { EpisodesCarousel } from "./components/EpisodesCarousel";
 import star from "./components/Icons/star.svg";
-
-dotenv.config();
 
 const serieId = "tt6487482";
 
