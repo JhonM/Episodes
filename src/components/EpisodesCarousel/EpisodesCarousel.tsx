@@ -4,32 +4,35 @@ import Carousel from "../Carousel/Carousel";
 
 type EpisodesCarouselType = {
   data: EpisodesType["Episodes"];
-  currentEpisode: (episode: EpisodeType) => void;
+  currentEpisode: EpisodeType;
+  setCurrentEpisode: (episode: EpisodeType) => void;
 };
 
 export const EpisodesCarousel = ({
   data,
   currentEpisode,
+  setCurrentEpisode,
 }: EpisodesCarouselType) => {
   if (data == undefined) {
     return <div></div>;
   }
 
   return (
-    <Carousel lastIdx={data.length - 1}>
+    <Carousel lastIdx={data.length - 1} show={4}>
       <Carousel.Container>
         {data.map((episode) => (
           <Carousel.Content
             key={episode.imdbID}
             episode={episode}
             onSelect={(episodeData) =>
-              currentEpisode(episodeData as EpisodeType)
+              setCurrentEpisode(episodeData as EpisodeType)
             }
+            isSelected={currentEpisode.imdbID === episode.imdbID}
           />
         ))}
       </Carousel.Container>
 
-      <div className="flex justify-end">
+      <div className="flex justify-end mt-4">
         <Carousel.ArrowLeft />
         <Carousel.ArrowRight />
       </div>

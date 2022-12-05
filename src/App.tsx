@@ -56,31 +56,35 @@ export const App = () => {
     const split = w.split("/");
     return (
       <span key={w}>
-        <span className="font-bold">{split[0]}</span>/{split[1]}
+        <span className="font-HelveticaNeueLTStd-Bd">{split[0]}</span>/
+        {split[1]}
       </span>
     );
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto font-HelveticaNeueLTStd-Lt">
       <div className="h-[1372px] lg:h-[812px] w-full flex flex-col lg:flex-row">
         <div
-          className="flex-1 basis-6/12 lg:basis-8/12 bg-cover flex-col lg:flex-row h-full w-full bg-blend-color-normal flex relative"
+          className="flex-1 basis-6/12 lg:basis-8/12 bg-cover flex-col lg:flex-row h-full w-full flex relative bg-black"
           style={{ backgroundImage: `url(${serieData.Poster})` }}
         >
           <div className="absolute inset h-full w-full bg-gradient-to-t from-black">
             <div className="relative h-full">
-              <div className="pl-20 pt-[8%] text-white z-10 max-w-md h-auto space-y-68 h-3/5">
+              <div className="px-8 lg:pl-20 lg:pr-0 pt-[8%] text-white z-10 max-w-md h-auto space-y-68 h-3/5">
                 <div className="">
                   <div className="leading-7 text-[23px]">Season</div>
-                  <div className="leading-[87px] text-[74px]">{Title}</div>
+                  <div className="leading-[87px] text-[74px] font-HelveticaNeueLTStd-Bd break-all">
+                    {Title}
+                  </div>
                   <div className="leading-7 text-[23px]">{Plot}</div>
                 </div>
               </div>
-              <div className="overflow-hidden display-grid lg:max-w-584 mb-4 h-2/5">
+              <div className="lg:max-w-584 mb-4 h-2/5">
                 <EpisodesCarousel
                   data={episodesData.Episodes}
-                  currentEpisode={(episode) => setCurrentEpisode(episode)}
+                  currentEpisode={currentEpisode}
+                  setCurrentEpisode={(episode) => setCurrentEpisode(episode)}
                 />
               </div>
             </div>
@@ -107,10 +111,10 @@ export const App = () => {
             </div>
             <hr className="border-b-1 border-[#979797] opacity-20" />
             <div className="h-3/5 p-8 flex flex-col text-left">
-              <div className="text-[27px] leading-8 mb-2">
+              <div className="text-[27px] leading-8 mb-2 font-HelveticaNeueLTStd-Bd">
                 {currentEpisode.Title}
               </div>
-              <div className="text-[19px] leading-[22px]">
+              <div className="text-[19px] leading-[22px] line-clamp-3">
                 {currentEpisode.Plot}
               </div>
             </div>

@@ -13,4 +13,26 @@
       scrollbar-width: none;
     }
   }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+}
+
+@font-face {
+  font-family: "HelveticaNeueLTStd-Lt";
+  src: url("./fonts/HelveticaNeueLTStd-Lt.otf");
+}
+
+@font-face {
+  font-family: "HelveticaNeueLTStd-Bd";
+  src: url("./fonts/HelveticaNeueLTStd-Bd.otf");
+}
+
+@font-face {
+  font-family: "HelveticaNeueLTStd-Md";
+  src: url("./fonts/HelveticaNeueLTStd-Md.otf");
 }

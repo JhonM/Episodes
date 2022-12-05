@@ -5,9 +5,18 @@ import { ArrowLeft } from "./ArrowLeft";
 import { ArrowRight } from "./ArrowRight";
 import { CarouselContext } from "./CarouselContext";
 
-const Carousel = (props: { children: React.ReactNode; lastIdx: number }) => {
+type CarouselType = {
+  children: React.ReactNode;
+  lastIdx: number;
+  show?: 3 | 4;
+};
+
+const Carousel = ({ children, lastIdx, show = 3 }: CarouselType) => {
   const [idx, setIdx] = useState(0);
-  const lastIdx = props.lastIdx;
+  const [length, setLength] = useState(React.Children.count(children));
+  React.useEffect(() => {
+    setLength(React.Children.count(children));
+  }, [children]);
 
   const goLeft = () => {
     if (idx === 0) {
@@ -26,8 +35,8 @@ const Carousel = (props: { children: React.ReactNode; lastIdx: number }) => {
   };
 
   return (
-    <CarouselContext.Provider value={{ idx, goLeft, goRight }}>
-      <div>{props.children}</div>
+    <CarouselContext.Provider value={{ idx, goLeft, goRight, show }}>
+      <>{children}</>
     </CarouselContext.Provider>
   );
 };
